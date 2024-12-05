@@ -2,6 +2,10 @@ import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# 한글 깨짐 방지 - 한글용 폰트 추가
+plt.rcParams['font.family'] = "Malgun Gothic"
+plt.rcParams['axes.unicode_minus'] = False
+
 titanic = sns.load_dataset("titanic")
 # print(titanic)
 # titanic.to_csv("data/titanic.csv", index=False)  # csv파일로 저장
@@ -30,4 +34,8 @@ titanic["survived"][titanic["sex"]=="female"].value_counts().plot.pie(ax=ax[1])
 ax[0].set_title("Survived (Male)")
 ax[1].set_title("Survived (Female)")
 
+plt.show()
+
+sns.countplot(data=titanic, x="pclass", hue="survived")  # 객실등급과 생존률
+plt.title("객실등급 vs 생존률")
 plt.show()
