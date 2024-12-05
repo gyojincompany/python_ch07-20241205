@@ -24,18 +24,30 @@ titanic["deck"] = titanic["deck"].fillna("C")  # 결측치를 'C'로 대입
 
 print(titanic.isnull().sum())  # 각 필드의 결측치 합
 
-f, ax = plt.subplots(1, 2, figsize=(10,5))
-print(titanic["survived"][titanic["sex"]=="male"].value_counts())  # 남자의 생존 1, 사망 0 의 수
-print(titanic["survived"][titanic["sex"]=="female"].value_counts())  # 여자의 생존 1, 사망 0 의 수
+# f, ax = plt.subplots(1, 2, figsize=(10,5))
+# print(titanic["survived"][titanic["sex"]=="male"].value_counts())  # 남자의 생존 1, 사망 0 의 수
+# print(titanic["survived"][titanic["sex"]=="female"].value_counts())  # 여자의 생존 1, 사망 0 의 수
+#
+# titanic["survived"][titanic["sex"]=="male"].value_counts().plot.pie(ax=ax[0])
+# titanic["survived"][titanic["sex"]=="female"].value_counts().plot.pie(ax=ax[1])
+#
+# ax[0].set_title("Survived (Male)")
+# ax[1].set_title("Survived (Female)")
+#
+# plt.show()
 
-titanic["survived"][titanic["sex"]=="male"].value_counts().plot.pie(ax=ax[0])
-titanic["survived"][titanic["sex"]=="female"].value_counts().plot.pie(ax=ax[1])
+# sns.countplot(data=titanic, x="pclass", hue="survived")  # 객실등급과 생존률
+# plt.title("객실등급 vs 생존률")
+# plt.show()
 
-ax[0].set_title("Survived (Male)")
-ax[1].set_title("Survived (Female)")
+titanic2 = titanic.select_dtypes(include=[int, float, bool])
+# titanic 칼럼 중 문자열을 제외한 정수, 실수, bool 타입의 칼럼만 추출하여 다시 저장
+print(titanic2)
 
-plt.show()
+titanic_corr = titanic2.corr(method="pearson")  # 상관분석
+print(titanic_corr)
+# titanic_corr.to_csv("data/titanic_corr.csv", index=False)
+# print(sns.get_dataset_names())  # seaborn 에서 제공하는 기본 데이터 이름 출력
 
-sns.countplot(data=titanic, x="pclass", hue="survived")  # 객실등급과 생존률
-plt.title("객실등급 vs 생존률")
+sns.pairplot(titanic, hue="survived")
 plt.show()
