@@ -1,5 +1,6 @@
 import seaborn as sns
 import pandas as pd
+import matplotlib.pyplot as plt
 
 titanic = sns.load_dataset("titanic")
 # print(titanic)
@@ -18,3 +19,15 @@ print(titanic["deck"].value_counts())
 titanic["deck"] = titanic["deck"].fillna("C")  # 결측치를 'C'로 대입
 
 print(titanic.isnull().sum())  # 각 필드의 결측치 합
+
+f, ax = plt.subplots(1, 2, figsize=(10,5))
+print(titanic["survived"][titanic["sex"]=="male"].value_counts())  # 남자의 생존 1, 사망 0 의 수
+print(titanic["survived"][titanic["sex"]=="female"].value_counts())  # 여자의 생존 1, 사망 0 의 수
+
+titanic["survived"][titanic["sex"]=="male"].value_counts().plot.pie(ax=ax[0])
+titanic["survived"][titanic["sex"]=="female"].value_counts().plot.pie(ax=ax[1])
+
+ax[0].set_title("Survived (Male)")
+ax[1].set_title("Survived (Female)")
+
+plt.show()
