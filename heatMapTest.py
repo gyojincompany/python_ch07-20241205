@@ -13,5 +13,5 @@ print(flights)
 flights_df = flights.pivot(index="month", columns="year", values="passengers")
 print(flights_df)
 
-sns.heatmap(flights_df, cmap="RdYlGn_r")
+sns.heatmap(flights_df, cmap="RdYlGn_r", annot=True)
 plt.show()

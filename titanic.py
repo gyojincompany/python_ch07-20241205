@@ -52,5 +52,43 @@ print(titanic_corr)
 # sns.pairplot(titanic2, hue="survived")
 # plt.show()
 
-sns.catplot(data=titanic, x="pclass", y="survived", hue="sex", kind="point")
+# sns.catplot(data=titanic, x="pclass", y="survived", hue="sex", kind="point")
+# plt.show()
+
+def category_age(age):
+    if age < 10: # 10세 미만
+       return 0
+    elif age< 20: # 10대
+       return 1
+    elif age< 30: # 20대
+       return 2
+    elif age< 40: # 30대
+       return 3
+    elif age< 50: # 40대
+       return 4
+    elif age< 60: # 50대
+       return 5
+    elif age< 70: # 60대
+       return 6
+    else: # 70세 이상
+       return 7
+
+titanic["age2"] = titanic["age"].apply(category_age)
+# titanic 데이터에 새로운 칼럼이 생성->기존의 age 칼럼의 나이로 등급으로 환산
+print(titanic)
+titanic["sex"] = titanic["sex"].map({"male":1, "female":0})
+# 성별 male->1, female->0 으로 변환(문자열->숫자)
+print(titanic)
+titanic["family"] = titanic["sibsp"] + titanic["parch"] + 1
+# 형제/자매/배우자 + 부모/자식 + 본인 -> family 열로 새로 생성
+print(titanic)
+
+heatmap_data = titanic[["survived","sex","age2","family","pclass","fare"]]
+print(heatmap_data.corr())
+
+colormap = plt.cm.RdBu
+
+sns.heatmap(heatmap_data.corr(), cmap=colormap, linecolor="white", annot=True,
+            annot_kws={"size":10}, square=True, linewidths=0.1, vmax=1.0)
+
 plt.show()
