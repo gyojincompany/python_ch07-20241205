@@ -49,5 +49,8 @@ print(titanic_corr)
 # titanic_corr.to_csv("data/titanic_corr.csv", index=False)
 # print(sns.get_dataset_names())  # seaborn 에서 제공하는 기본 데이터 이름 출력
 
-sns.pairplot(titanic, hue="survived")
+# sns.pairplot(titanic2, hue="survived")
+# plt.show()
+
+sns.catplot(data=titanic, x="pclass", y="survived", hue="sex", kind="point")
 plt.show()
